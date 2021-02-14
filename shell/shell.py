@@ -1,5 +1,6 @@
 import os, sys, re
 
+# Needs to determine functionality for symbols within commands
 def runShell():
     while True:                                                     #keep active prompt
         pid = os.getpid()
