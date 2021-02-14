@@ -16,7 +16,7 @@ def main():
         elif rc == 0:
             runCommand(args)
             sys.exit(0)
-        else: os.wait
+        else: os.wait()
 
 def runCommand(args):
     dirs = os.environ['PATH']
@@ -28,3 +28,6 @@ def runCommand(args):
         except OSError:
             pass
     writeLine('Unrecognized Command\n')
+
+if __name__ == '__main__':
+    main()
