@@ -1,4 +1,5 @@
 import os, sys, re
+import myIO
 
 # Needs to determine functionality for symbols within commands
 def runShell():
@@ -8,8 +9,7 @@ def runShell():
         else:
             os.write(1,('$ ').encode())                             #use PS1 if present
             
-        usIN = input()                                              #get input
-        usIN = usIN.split(' ')                                      #delimit input by spacing
+        usIN = myIO.readLines()                                     #delimit input by spacing
 
         if 'cd' in usIN:                                            #change dir command
             try: os.chdir(usIN[1])
