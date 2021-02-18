@@ -5,10 +5,10 @@ import myIO
 def runShell():
     while True:                                                     #keep active prompt
         pid = os.getpid()
-        if 'PS1' in os.environ: os.write(1, (os.eviron['PS1']).encode())
-        else:
-            os.write(1,('$ ').encode())                             #use PS1 if present
-            
+       # if 'PS1' in os.environ: os.write(1, (os.environ['PS1']).encode())
+       # else:
+       #     os.write(1,('$ ').encode())                             #use PS1 if present
+        os.write(1,('$ ').encode())    
         usIN = myIO.readLines()                                     #delimit input by spacing
         if 'cd' in usIN:                                            #change dir command
             try: os.chdir(usIN[1])
