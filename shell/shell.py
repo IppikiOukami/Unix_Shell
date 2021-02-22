@@ -5,17 +5,20 @@ import myIO
 def runShell():
     while True:                                                     #keep active prompt
         pid = os.getpid()
-       # if 'PS1' in os.environ: os.write(1, (os.environ['PS1']).encode())
-       # else:
-       #     os.write(1,('$ ').encode())                             #use PS1 if present
-        os.write(1,('$ ').encode())    
-        usIN = myIO.readLines()                                     #delimit input by spacing
-        if 'cd' in usIN:                                            #change dir command
-            try: os.chdir(usIN[1])
-            except FileNotFoundError: pass
-            continue
-        if 'exit' in usIN: sys.exit(0)                              #exit on Command
-        if not usIN: pass
+    
+        os.environ['PS1'] = '$ '                                    #change PS1 to '$ '
+        os.write(1,(os.environ['PS1']).encode())                       
+
+        usIN = myIO.readLines()
+        if usIN == '': os.write(2, 'No command given\n'.encode())
+        elif usIN[0] == 'cd':
+            if len(usIN) == 2:
+                try: os.chdir(usIN[1])
+                except: os.write(2, 'Invalid directory\n'.encode())
+            elif len(usIN) == 1: os.chdir('..')
+            else: os.write(2, 'Invalid command\n'.encode())
+            
+        elif 'exit' in usIN: sys.exit(0)                            #exit on Command
         else:
             runCommand(usIN,pid)                                    #attempt command
                     
@@ -40,7 +43,7 @@ def runCommand(args,pid=None):                                      #find comman
             os.set_inheritable(1, True)
             argg = args[:args.index('>')]
             myExe(argg)
-        if '<' in args:
+        if '<' in args:# dest < source
             os.close(0)
             os.open(args[-1], os.O_RDONLY);
             os.set_inheritable(0, True)
