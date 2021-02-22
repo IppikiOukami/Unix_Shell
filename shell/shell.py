@@ -61,14 +61,14 @@ def runCommand(args,pid=None):                                      #find comman
                 os.write(2, ("Fork Failed, returning {}\n".format(rc)).encode())
                 sys.exit(1)
             elif rc == 0:
-                os.close(pIn)
-                os.dup(pOut)
+                os.close(pIn)                                       #close fd 0
+                os.dup(pOut)                                        #duplicate fd 1
                 os.set_inheritable(1, True)
                 for fd in (pIn, pOut): os.close(fd)
                 myExe(p1)
             else:
-                os.close(pOut)
-                os.dup(pIn)
+                os.close(pOut)                                      #close fd 1
+                os.dup(pIn)                                         #duplicate fd 0
                 os.set_inheritable(0, True)
                 for fd in (pIn,pOut): os.close(fd)
                 myExe(p2)
