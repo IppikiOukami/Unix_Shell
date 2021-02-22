@@ -8,7 +8,8 @@ def readLines():
     char = getChar()
     while char and char != "EOF": line, char = line + char, getChar()
     index, limit = 0,0
-    
+    return line
+
 def getChar():
     global limit, index
 
